@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--Toolbar .. -->
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/toolbar_layout" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include
+        layout="@layout/main_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />
+
+    <!--This Linear Layout for Fragment 1 -->
+    <LinearLayout
+        android:id="@+id/frag_card1_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/GreenYellow"
+        android:orientation="vertical" />
+
+    <!--Linear Layout for fragment 2 -->
+
+    <LinearLayout
+        android:id="@+id/frag_card2_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/Purple"
+        android:orientation="vertical" />
+
+</LinearLayout>
