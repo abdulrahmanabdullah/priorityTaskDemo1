@@ -1,5 +1,6 @@
 package abdulrahmanjavanrd.com.timelinedemo4.service
 
+import abdulrahmanjavanrd.com.timelinedemo4.Model.WorksList
 import android.os.AsyncTask
 import android.util.Log
 
@@ -34,6 +35,9 @@ class MyTaskSync: AsyncTask<Int, String, Void>(){
             ctr++
             if(ctr == timer){
                 //TODO: remove first items in ArrayList
+                var workList = WorksList()
+                var list:ArrayList<String> = workList.getArrayList()
+                list.removeAt(0)
             }
         }
         Log.i(TAG,"doInBackground , $ctr ," +

@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".Intents.ProcessIntent"/>
         <service android:name=".service.MyTimerService"/>
+        <service android:name=".service.MyIntentService"/>
     </application>
 
 </manifest>

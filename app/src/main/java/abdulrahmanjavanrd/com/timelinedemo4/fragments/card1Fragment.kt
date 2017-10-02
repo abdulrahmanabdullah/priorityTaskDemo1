@@ -1,13 +1,12 @@
 package abdulrahmanjavanrd.com.timelinedemo4.fragments
 
 import abdulrahmanjavanrd.com.timelinedemo4.R
-import abdulrahmanjavanrd.com.timelinedemo4.service.MyTimerService
-import abdulrahmanjavanrd.com.timelinedemo4.service.setTextViewResult
+import abdulrahmanjavanrd.com.timelinedemo4.service.MyIntentService
 import android.os.Bundle
 import android.app.Fragment
 import android.content.Intent
-import android.os.CountDownTimer
-import android.util.Log
+import android.os.Handler
+import android.os.ResultReceiver
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +25,7 @@ class card1Fragment : Fragment() {
     var spinnerDate: Spinner? = null
 
 
+    var handler = Handler()
     var title: TextView? = null
 
     var timer: TextView? = null
@@ -67,78 +67,67 @@ class card1Fragment : Fragment() {
 //
 //
 //    }
-
-    private fun testSpinner(v: View) {
-        title = v.findViewById(R.id.txCard1Title)
-        spinnerNumbers = v.findViewById(R.id.spinner_numbers)
-        title!!.text = spinnerNumbers!!.selectedItem.toString()
-        Log.d("spinner ", "${spinnerNumbers!!.selectedItem}")
-    }
+//
+//    private fun testSpinner(v: View) {
+//        title = v.findViewById(R.id.txCard1Title)
+//        spinnerNumbers = v.findViewById(R.id.spinner_numbers)
+//        title!!.text = spinnerNumbers!!.selectedItem.toString()
+//        Log.d("spinner ", "${spinnerNumbers!!.selectedItem}")
+//    }
 
 
     /************************** Timer ********************************/
     private fun startTime(v: View) {
-//        var count = counter(100000, 100)
 
-        timer = v.findViewById(R.id.tvTimer)
+        var myResultReceiver = MyresultReceiver(null)
+          timer = v.findViewById(R.id.tvTimer)
         timer!!.text = "Click to start "
         timer!!.setOnClickListener({
-            var intentP = Intent(activity, MyTimerService::class.java)
+            var intentP = Intent(activity, MyIntentService::class.java)
             // TODO: pass all time to MyTimerService .
-            intentP.putExtra("timer",10)
+            intentP.putExtra("timer",5)
+            intentP.putExtra("sendReceiver",myResultReceiver)
             activity.startService(intentP)
 
-            var obj = setTextViewResult()
-            var o = obj.setTxt
-            timer!!.text = o
         })
 
 
     }
 
 
-    private fun stopTime(v: View) {
-        timer = v.findViewById(R.id.tvTimer)
-        var count = counter(100000, 100)
-        count.cancel()
-    }
 
-    /**************************  end Timer ********************************/
+    /************************* Inner class for ResultReceiver  .. *********************/
+
+    private inner class MyresultReceiver(handler:Handler?):ResultReceiver(handler){
+
+        override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
+
+            if (resultCode == 1 && resultData != null ){
+                var str = resultData.get("result").toString()
+                handler.post(Runnable {
+                    kotlin.run {
+                        timer!!.text = str
+                    }
+
+                })
 
 
-    /************************* Inner class for timer .. *********************/
-    inner class counter(millSecond: Long, countDown: Long) : CountDownTimer(millSecond, countDown) {
+            }
 
+            else if (resultCode == 2 && resultData != null){
+                var str = resultData.get("finish").toString()
+                handler.post(Runnable {
+                    kotlin.run {
+                        timer!!.text = str
+                    }
 
-        override fun onFinish() {
+                })
+            }
 
-            timer!!.text = "Done"
+            super.onReceiveResult(resultCode, resultData)
         }
-
-        override fun onTick(p0: Long) {
-
-            upTime++
-            timer!!.text = upTime.toString()
-
-
-        }
-
     }
-    /************************* End Inner class for timer .. *********************/
+    /************************* End ResultReciver .. *********************/
 
 }// Required empty public constructor
 
-//fun LoneWolf(){
-//    var ar = arrayOf("It's not easy going it alone " +
-//            "But if you keep going " +
-//            "Stay true to yourself " +
-//            "It well be worth it in the end " +
-//            "the hardest walk you can make " +
-//            "is the walk you make alone " +
-//            "But that is the  walk " +
-//            "that makes you the strongest " +
-//            "That is the walk that builds your character the most " +
-//            "to all of you fighting battles alone " +
-//            "to all of you going against the grain battling naysayers " +
-//            "Stay Strong keep Going ")
-//}
