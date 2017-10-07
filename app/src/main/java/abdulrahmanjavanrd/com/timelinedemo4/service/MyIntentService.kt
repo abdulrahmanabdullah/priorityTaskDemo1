@@ -27,6 +27,7 @@ class MyIntentService():IntentService("Worker Thread"){
 
         // reciver
         var reciver:ResultReceiver = p0!!.getParcelableExtra("sendReceiver")
+
         var bundle = Bundle()
         while (ctr <= timer!!){
             Log.i(TAG,"Counter = $ctr")
@@ -36,8 +37,9 @@ class MyIntentService():IntentService("Worker Thread"){
             bundle.putString("result","$ctr")
             reciver.send(1,bundle)
 
-            if (ctr == timer){
+            if (ctr >= timer){
                 bundle.putString("finish","Done")
+                bundle.putInt("removeItem",0)
                 reciver.send(2,bundle)
             }
 

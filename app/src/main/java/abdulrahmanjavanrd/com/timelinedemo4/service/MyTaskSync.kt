@@ -27,21 +27,17 @@ class MyTaskSync: AsyncTask<Int, String, Void>(){
     override fun doInBackground(vararg p0: Int?): Void? {
         var timer = p0[0]
         var ctr = 1
-        var o = setTextViewResult()
+
         while (ctr <= timer!!){
             publishProgress("$ctr")
             Thread.sleep(1000)
-            o.setTxt = "$ctr"
             ctr++
             if(ctr == timer){
                 //TODO: remove first items in ArrayList
-                var workList = WorksList()
-                var list:ArrayList<String> = workList.getArrayList()
-                list.removeAt(0)
+
             }
         }
-        Log.i(TAG,"doInBackground , $ctr ," +
-                "Test TXT = ${o.setTxt} Thread name = ${Thread.currentThread().name} ")
+        Log.i(TAG,"doInBackground , $ctr , Thread name = ${Thread.currentThread().name} ")
         return null
     }
 
@@ -52,7 +48,3 @@ class MyTaskSync: AsyncTask<Int, String, Void>(){
     }
 }
 
-class setTextViewResult{
-    var setTxt:String?=null
-
-}
